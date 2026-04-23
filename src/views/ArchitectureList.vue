@@ -77,10 +77,10 @@
       <TransitionGroup name="layout" tag="div">
       <!-- 建筑列表 - 网格布局 -->
       <div v-if="currentLayout === 'grid'" key="grid-layout" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <a
+        <router-link
           v-for="building in filteredBuildings"
           :key="building.id"
-          :href="`/architecture/${building.id}`"
+          :to="`/architecture/${building.id}`"
           class="block no-underline bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-all duration-300 group"
         >
           <div class="h-48 overflow-hidden">
@@ -104,15 +104,15 @@
               查看详情 <span class="ml-1">→</span>
             </div>
           </div>
-        </a>
+        </router-link>
       </div>
 
       <!-- 建筑列表 - 列表布局 -->
       <div v-else-if="currentLayout === 'list'" key="list-layout" class="space-y-4">
-        <a
+        <router-link
           v-for="building in filteredBuildings"
           :key="building.id"
-          :href="`/architecture/${building.id}`"
+          :to="`/architecture/${building.id}`"
           class="block no-underline bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-all duration-300 group flex flex-col md:flex-row"
         >
           <div class="md:w-48 h-40 md:h-auto overflow-hidden flex-shrink-0">
@@ -138,15 +138,15 @@
               查看详情 <span class="ml-1">→</span>
             </div>
           </div>
-        </a>
+        </router-link>
       </div>
 
       <!-- 建筑列表 - 浮窗布局 -->
       <div v-else-if="currentLayout === 'card'" key="card-layout" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <a
+        <router-link
           v-for="building in filteredBuildings"
           :key="building.id"
-          :href="`/architecture/${building.id}`"
+          :to="`/architecture/${building.id}`"
           class="block no-underline bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative"
         >
             <div class="h-36 overflow-hidden">
@@ -167,7 +167,7 @@
               </div>
             </div>
           </div>
-        </a>
+        </router-link>
         </div>
       </TransitionGroup>
 

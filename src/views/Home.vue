@@ -27,12 +27,12 @@
           <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90 leading-relaxed">
             {{ building.description }}
           </p>
-          <a 
-            :href="`/architecture/${building.id}`" 
+          <router-link 
+            :to="`/architecture/${building.id}`" 
             class="px-8 py-3 rounded-md bg-cn-red/90 text-white hover:bg-cn-red font-medium inline-block transition-all duration-300 backdrop-blur-sm border border-cn-red/30 hover:scale-105"
           >
             了解详情
-          </a>
+          </router-link>
         </div>
       </div>
 
@@ -164,7 +164,7 @@
     <footer class="bg-cn-black text-white py-12 section" ref="entrySection">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          <a href="/architecture" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
+          <router-link :to="/architecture" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
             <div class="w-12 h-12 bg-cn-red/20 rounded-full flex items-center justify-center mb-4 text-cn-red text-2xl group-hover:scale-110 transition-transform duration-300">
               🏛️
             </div>
@@ -173,8 +173,8 @@
             <span class="text-cn-red group-hover:translate-x-1 transition-transform duration-300 text-sm">
               开始探索 →
             </span>
-          </a>
-          <a href="/timeline" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
+          </router-link>
+          <router-link :to="/timeline" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
             <div class="w-12 h-12 bg-cn-yellow/20 rounded-full flex items-center justify-center mb-4 text-cn-yellow text-2xl group-hover:scale-110 transition-transform duration-300">
               📜
             </div>
@@ -183,8 +183,8 @@
             <span class="text-cn-yellow group-hover:translate-x-1 transition-transform duration-300 text-sm">
               穿越时空 →
             </span>
-          </a>
-          <a href="/interactive" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
+          </router-link>
+          <router-link :to="/interactive" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
             <div class="w-12 h-12 bg-cn-cyan/20 rounded-full flex items-center justify-center mb-4 text-cn-cyan text-2xl group-hover:scale-110 transition-transform duration-300">
               🎮
             </div>
@@ -193,7 +193,7 @@
             <span class="text-cn-cyan group-hover:translate-x-1 transition-transform duration-300 text-sm">
               立即体验 →
             </span>
-          </a>
+          </router-link>
         </div>
         <!-- 版权信息 -->
         <div class="pt-8 border-t border-white/10 text-center text-white/50 text-sm">
