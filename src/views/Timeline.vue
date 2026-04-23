@@ -199,7 +199,7 @@ const dynasties = [
     period: '公元前221年-公元前207年',
     description: '中国历史上第一个大一统王朝，建筑风格恢弘大气，以大型工程建设为主要特征，奠定了中国古代建筑的基本规制。',
     milestones: ['夯土技术成熟', '大型水利工程建设', '城市规划体系形成'],
-    buildings: ['dujiangyan']
+    buildings: ['dujiangyan', 'epang-palace']
   },
   {
     id: 'han',
@@ -207,7 +207,7 @@ const dynasties = [
     period: '公元前202年-公元220年',
     description: '建筑技术进一步发展，木构建筑体系逐渐成熟，斗拱技术开始广泛应用，楼阁建筑大量出现。',
     milestones: ['木构建筑体系成型', '斗拱技术普及', '砖石建筑发展'],
-    buildings: []
+    buildings: ['weiyang-palace']
   },
   {
     id: 'three-kingdoms',
@@ -215,7 +215,7 @@ const dynasties = [
     period: '公元220年-公元589年',
     description: '佛教建筑兴盛，石窟、佛塔、寺庙大量修建，建筑装饰艺术得到极大发展。',
     milestones: ['佛教建筑兴起', '石窟艺术繁荣', '琉璃工艺应用'],
-    buildings: ['hanging-temple', 'songyue-pagoda', 'mogao-grottoes']
+    buildings: ['hanging-temple', 'songyue-pagoda', 'mogao-grottoes', 'yungang-grottoes', 'nanxiangtang-grottoes', 'foguang-temple-pagoda', 'guanque-tower']
   },
   {
     id: 'sui',
@@ -231,7 +231,7 @@ const dynasties = [
     period: '公元618年-公元907年',
     description: '中国古代建筑的鼎盛时期，建筑规模宏大，气势磅礴，造型庄重优美，技术与艺术完美结合。',
     milestones: ['斗拱技术成熟', '琉璃瓦广泛使用', '建筑标准化体系建立'],
-    buildings: ['mogao-grottoes', 'potala-palace']
+    buildings: ['mogao-grottoes', 'potala-palace', 'nanchan-temple', 'small-wild-goose-pagoda']
   },
   {
     id: 'song',
@@ -239,7 +239,7 @@ const dynasties = [
     period: '公元960年-公元1279年',
     description: '建筑风格趋向精致细腻，园林建筑高度发展，《营造法式》颁布标志着建筑技术的系统化规范化。',
     milestones: ['《营造法式》颁布', '园林艺术鼎盛', '建筑装饰精细化'],
-    buildings: ['yingxian-wooden-pagoda', 'jin-temple', 'qingjing-temple', 'mogao-grottoes']
+    buildings: ['yingxian-wooden-pagoda', 'jin-temple', 'qingjing-temple', 'mogao-grottoes', 'baoguo-temple', 'wanan-bridge']
   },
   {
     id: 'yuan',
@@ -247,7 +247,7 @@ const dynasties = [
     period: '公元1271年-公元1368年',
     description: '多民族建筑风格融合，藏传佛教建筑传入内地，城市建设规模宏大。',
     milestones: ['藏传佛教建筑传入', '大都城建设', '多民族建筑风格融合'],
-    buildings: ['mogao-grottoes', 'fujian-tulou']
+    buildings: ['mogao-grottoes', 'fujian-tulou', 'yongle-palace']
   },
   {
     id: 'ming',
@@ -263,7 +263,7 @@ const dynasties = [
     period: '公元1636年-公元1912年',
     description: '中国古代建筑的集大成时期，皇家园林建造达到顶峰，建筑工艺精湛，装饰华丽繁复。',
     milestones: ['皇家园林艺术顶峰', '样式雷建筑家族', '建筑装饰工艺极致'],
-    buildings: ['summer-palace', 'potala-palace', 'fujian-tulou', 'suzhou-gardens', 'confucius-temple']
+    buildings: ['summer-palace', 'potala-palace', 'fujian-tulou', 'suzhou-gardens', 'confucius-temple', 'huangcheng-prime-minister-residence', 'yonghe-lamasery']
   }
 ]
 

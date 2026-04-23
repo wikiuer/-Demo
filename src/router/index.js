@@ -4,6 +4,7 @@ import ArchitectureList from '../views/ArchitectureList.vue'
 import ArchitectureDetail from '../views/ArchitectureDetail.vue'
 import Timeline from '../views/Timeline.vue'
 import Interactive from '../views/Interactive.vue'
+import Map from '../views/Map.vue'
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: '/interactive',
     name: 'Interactive',
     component: Interactive
+  },
+  {
+    path: '/map',
+    name: 'Map',
+    component: Map
   }
 ]
 

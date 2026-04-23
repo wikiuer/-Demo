@@ -115,7 +115,7 @@ const baseQuizQuestions = [
   { question: '《营造法式》是哪个朝代颁布的？', options: ['唐朝', '宋朝', '元朝', '明朝'], answer: 1 },
   { question: '福建土楼的主要建筑材料是？', options: ['木材', '石头', '夯土', '砖'], answer: 2 }
 ]
-// 扩展题库（追加10题，最终测试共15题）
+// 扩展题库（追加20题，最终测试共25题，适配现有27座建筑数目）
 const extendedQuizQuestions = [
   { question: '应县木塔是什么结构的建筑？', options: ['全木结构', '砖石结构', '石木结构', '混合结构'], answer: 0 },
   { question: '故宫的正门是？', options: ['天安门', '午门', '太和门', '神武门'], answer: 1 },
@@ -126,7 +126,23 @@ const extendedQuizQuestions = [
   { question: '悬空寺位于哪座山？', options: ['泰山', '衡山', '恒山', '华山'], answer: 2 },
   { question: '孔庙位于哪个城市？', options: ['济南', '曲阜', '泰安', '济宁'], answer: 1 },
   { question: '我国古代建筑主要使用的颜色不包括？', options: ['红色', '黄色', '蓝色', '紫色'], answer: 3 },
-  { question: '以下哪个不是我国四大名亭？', options: ['醉翁亭', '陶然亭', '爱晚亭', '兰亭'], answer: 3 }
+  { question: '以下哪个不是我国四大名亭？', options: ['醉翁亭', '陶然亭', '爱晚亭', '兰亭'], answer: 3 },
+  // 新增建筑相关题目
+  { question: '阿房宫是哪个朝代修建的宫殿？', options: ['秦朝', '汉朝', '隋朝', '唐朝'], answer: 0 },
+  { question: '未央宫是哪个朝代的皇宫？', options: ['秦朝', '汉朝', '唐朝', '明朝'], answer: 1 },
+  { question: '云冈石窟位于哪个省份？', options: ['山西', '河南', '河北', '陕西'], answer: 0 },
+  { question: '佛光寺祖师塔是哪个朝代的建筑？', options: ['汉朝', '北魏', '唐朝', '宋朝'], answer: 1 },
+  { question: '中国现存最早的木结构建筑是？', options: ['佛光寺', '南禅寺大殿', '应县木塔', '保国寺'], answer: 1 },
+  { question: '小雁塔位于哪个城市？', options: ['洛阳', '开封', '西安', '北京'], answer: 2 },
+  { question: '宁波保国寺是哪个朝代的建筑？', options: ['唐朝', '北宋', '南宋', '元朝'], answer: 1 },
+  { question: '万安桥（洛阳桥）首创的加固技术是？', options: ['筏形基础', '种蛎固基', '浮运架梁', '以上都是'], answer: 3 },
+  { question: '永乐宫以什么闻名于世？', options: ['壁画', '木雕', '石刻', '琉璃'], answer: 0 },
+  { question: '与诗句「欲穷千里目，更上一层楼」相关的建筑是？', options: ['岳阳楼', '黄鹤楼', '鹳雀楼', '滕王阁'], answer: 2 },
+  { question: '皇城相府是哪个朝代的官宦宅第？', options: ['宋朝', '元朝', '明朝', '清朝'], answer: 3 },
+  { question: '雍和宫最初是什么性质的建筑？', options: ['皇家宫殿', '佛教寺庙', '道观', '王府'], answer: 3 },
+  { question: '南响堂山石窟是哪个朝代的佛教建筑？', options: ['北魏', '北齐', '唐朝', '宋朝'], answer: 1 },
+  { question: '以下哪个是我国现存最早的跨海梁式大石桥？', options: ['赵州桥', '卢沟桥', '万安桥', '广济桥'], answer: 2 },
+  { question: '永乐宫是哪个朝代的道教宫观？', options: ['宋朝', '元朝', '明朝', '清朝'], answer: 1 }
 ]
 // 当前使用的题库
 const quizQuestions = computed(() => {
@@ -175,8 +191,8 @@ function nextQuestion() {
     // 重置操作计数
     localStorage.setItem('quiz_action_count', '0')
     showFloatButton.value = false
-    // 最终测试判断
-    if (isFinalTest.value && score.value >= 6) {
+    // 最终测试判断（25题及格线15分，60%正确率）
+    if (isFinalTest.value && score.value >= 15) {
       isFinalTestPassed.value = true
       localStorage.setItem('quiz_final_passed', 'true')
     }

@@ -163,7 +163,7 @@
     <!-- 页脚 -->
     <footer class="bg-cn-black text-white py-12 section" ref="entrySection">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <router-link :to="/architecture/" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
             <div class="w-12 h-12 bg-cn-red/20 rounded-full flex items-center justify-center mb-4 text-cn-red text-2xl group-hover:scale-110 transition-transform duration-300">
               🏛️
@@ -182,6 +182,16 @@
             <p class="text-white/70 text-sm mb-3">穿越千年建筑发展历程</p>
             <span class="text-cn-yellow group-hover:translate-x-1 transition-transform duration-300 text-sm">
               穿越时空 →
+            </span>
+          </router-link>
+          <router-link :to="/map/" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
+            <div class="w-12 h-12 bg-cn-red/20 rounded-full flex items-center justify-center mb-4 text-cn-red text-2xl group-hover:scale-110 transition-transform duration-300">
+              🗺️
+            </div>
+            <h3 class="text-xl font-bold mb-2 font-serif">地图分布</h3>
+            <p class="text-white/70 text-sm mb-3">直观查看建筑地理分布</p>
+            <span class="text-cn-red group-hover:translate-x-1 transition-transform duration-300 text-sm">
+              查看地图 →
             </span>
           </router-link>
           <router-link :to="/interactive/" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
@@ -239,15 +249,18 @@ onMounted(async () => {
   try {
     const res = await fetch('data/buildings.json')
     const buildings = await res.json()
-    // 指定轮播建筑：故宫、万里长城、颐和园、布达拉宫
-    const carouselIds = ['forbidden-city', 'great-wall', 'summer-palace', 'potala-palace']
-    carouselBuildings.value = carouselIds.map(id => buildings.find(b => b.id === id)).filter(Boolean)
+    // 轮播逻辑：第一个固定为故宫，其余从所有建筑中随机挑选3个，共4个轮播项
+    const forbiddenCity = buildings.find(b => b.id === 'forbidden-city')
+    // 过滤掉故宫，打乱剩余建筑
+    const restBuildings = buildings.filter(b => b.id !== 'forbidden-city').sort(() => Math.random() - 0.5)
+    // 取前3个随机建筑和故宫拼接
+    carouselBuildings.value = [forbiddenCity, ...restBuildings.slice(0, 3)].filter(Boolean)
 
     // 自动轮播，每5秒切换
     autoplayInterval = setInterval(nextSlide, 5000)
 
     // 滚动入场动画
-    gsap.fromTo('.feature-card',
+    gsap.fromTo('.grid .group',
       { y: 50, opacity: 0 },
       {
         y: 0,
@@ -261,7 +274,7 @@ onMounted(async () => {
       }
     )
 
-    gsap.fromTo('a[href^="/"]',
+    gsap.fromTo('footer .group',
       { y: 30, opacity: 0 },
       {
         y: 0,

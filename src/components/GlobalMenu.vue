@@ -72,6 +72,7 @@ const menuItems = [
   { path: '/', label: '首页', en: 'Home' },
   { path: '/architecture', label: '建筑库', en: 'Architecture' },
   { path: '/timeline', label: '时间轴', en: 'Timeline' },
+  { path: '/map', label: '地图分布', en: 'Map' },
   { path: '/interactive', label: '互动体验', en: 'Interactive' },
 ]
 
