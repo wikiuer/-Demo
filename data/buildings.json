@@ -9,9 +9,8 @@
     "longitude": 116.397027,
     "latitude": 39.916648,
     "images": [
-      "/images/buildings/VCG211391346547.jpg",
-      "/images/buildings/VCG211324409833.jpg",
-      "https://picsum.photos/id/102/800/600"
+      "images/buildings/VCG211391346547.jpg",
+      "images/buildings/VCG211324409833.jpg"
     ],
     "description": "故宫博物院是中国明清两代的皇家宫殿，旧称紫禁城，位于北京中轴线的中心。北京故宫以三大殿为中心，占地面积约72万平方米，建筑面积约15万平方米，有大小宫殿七十多座，房屋九千余间，是世界上现存规模最大、保存最为完整的木质结构古建筑群之一。",
     "tech_highlights": [
@@ -41,8 +40,8 @@
     "longitude": 116.003768,
     "latitude": 40.356336,
     "images": [
-      "/images/buildings/VCG211391065033.jpg",
-      "/images/buildings/VCG211580936139.jpg"
+      "images/buildings/VCG211391065033.jpg",
+      "images/buildings/VCG211580936139.jpg"
     ],
     "description": "长城又称万里长城，是中国古代的军事防御工事，是一道高大、坚固而且连绵不断的长垣，用以限隔敌骑的行动。长城不是一道单纯孤立的城墙，而是以城墙为主体，同大量的城、障、亭、标相结合的防御体系。明长城总长度为8851.8千米，秦汉及早期长城超过1万千米，总长超过2.1万千米。",
     "tech_highlights": [
@@ -68,7 +67,7 @@
     "longitude": 116.276579,
     "latitude": 40.00025,
     "images": [
-      "/images/buildings/VCG41N1431926645.jpg"
+      "images/buildings/VCG41N1431926645.jpg"
     ],
     "description": "颐和园是清朝时期的皇家园林，前身为清漪园，坐落在北京西郊，距城区15公里，占地约290公顷，与圆明园毗邻。它是以昆明湖、万寿山为基址，以杭州西湖为蓝本，汲取江南园林的设计手法而建成的一座大型山水园林，也是保存最完整的一座皇家行宫御苑，被誉为“皇家园林博物馆”。",
     "tech_highlights": [
@@ -94,7 +93,7 @@
     "longitude": 114.769236,
     "latitude": 37.739529,
     "images": [
-      "/images/buildings/VCG211553603713.jpg"
+      "images/buildings/VCG211553603713.jpg"
     ],
     "description": "赵州桥又称安济桥，是世界上现存年代最久远、跨度最大、保存最完整的单孔坦弧敞肩石拱桥。赵州桥建造工艺独特，在世界桥梁史上首创“敞肩拱”结构形式，具有较高的科学研究价值。",
     "tech_highlights": [
@@ -120,7 +119,7 @@
     "longitude": 103.616736,
     "latitude": 31.002658,
     "images": [
-      "/images/buildings/VCG211436007169.jpg"
+      "images/buildings/VCG211436007169.jpg"
     ],
     "description": "都江堰是当今世界年代久远、唯一留存、仍在一直使用、以无坝引水为特征的宏大水利工程，被誉为“世界水利文化的鼻祖”。它使成都平原成为水旱从人、沃野千里的“天府之国”，至今灌区已达30余县市、面积近千万亩。",
     "tech_highlights": [
@@ -150,9 +149,9 @@
   "longitude": 113.188655,
   "latitude": 39.581886,
   "images": [
-    "/images/buildings/VCG211395857873.jpg",
-    "/images/buildings/VCG211419677586.jpg",
-    "/images/buildings/VCG211326063852.jpg"
+    "images/buildings/VCG211395857873.jpg",
+    "images/buildings/VCG211419677586.jpg",
+    "images/buildings/VCG211326063852.jpg"
   ],
   "description": "应县木塔全称佛宫寺释迦塔，是中国现存最高最古的木结构塔式建筑，也是世界上现存最高的木结构古建筑，与意大利比萨斜塔、巴黎埃菲尔铁塔并称“世界三大奇塔”。塔高67.31米，底层直径30.27米，呈平面八角形，全塔耗材红松木料3000立方米，2600多吨，纯木结构、无钉无铆，历经近千年风雨、多次地震仍完好无损。",
   "tech_highlights": [
@@ -182,9 +181,9 @@
   "longitude": 94.813778,
   "latitude": 40.042848,
   "images": [
-    "/images/buildings/VCG211380602191.jpg",
-    "/images/buildings/VCG211456256097.jpg",
-    "/images/buildings/VCG211539312113.jpg"
+    "images/buildings/VCG211380602191.jpg",
+    "images/buildings/VCG211456256097.jpg",
+    "images/buildings/VCG211539312113.jpg"
   ],
   "description": "莫高窟俗称千佛洞，是世界上现存规模最大、内容最丰富的佛教艺术地，现有洞窟735个，壁画4.5万平方米、泥质彩塑2415尊，是集建筑、彩塑、壁画为一体的综合性佛教艺术宝库。1987年被联合国教科文组织列为世界文化遗产。",
   "tech_highlights": [
@@ -214,8 +213,8 @@
   "longitude": 91.122694,
   "latitude": 29.655893,
   "images": [
-    "/images/buildings/VCG211422642640.jpg",
-    "/images/buildings/VCG211572833069.jpg"
+    "images/buildings/VCG211422642640.jpg",
+    "images/buildings/VCG211572833069.jpg"
   ],
   "description": "布达拉宫是世界上海拔最高，集宫殿、城堡和寺院于一体的宏伟建筑，也是西藏最庞大、最完整的古代宫堡建筑群。整座宫殿具有鲜明的藏式风格，依山而建，气势雄伟，高200余米，外观13层，实际只有9层，是藏传佛教的重要圣地。",
   "tech_highlights": [
@@ -245,8 +244,8 @@
   "longitude": 112.449977,
   "latitude": 37.778538,
   "images": [
-    "/images/buildings/VCG211323380911.jpg",
-    "/images/buildings/VCG211337457733.jpg"
+    "images/buildings/VCG211323380911.jpg",
+    "images/buildings/VCG211337457733.jpg"
   ],
   "description": "晋祠原名为晋王祠，初名唐叔虞祠，是为纪念晋国开国诸侯唐叔虞及母后邑姜后而建，是中国现存最早的皇家祭祀园林，晋国宗祠。其中难老泉、侍女像、周柏被誉为“晋祠三绝”，是中国古代建筑艺术的集中体现。",
   "tech_highlights": [
@@ -306,8 +305,8 @@
   "longitude": 113.707679,
   "latitude": 39.673222,
   "images": [
-    "/images/buildings/VCG211428615881.jpg",
-    "/images/buildings/VCG211434190402.jpg"
+    "images/buildings/VCG211428615881.jpg",
+    "images/buildings/VCG211434190402.jpg"
   ],
   "description": "悬空寺原叫“玄空阁”，是佛、道、儒三教合一的独特寺庙，建筑悬挂在恒山金龙峡西侧翠屏峰的峭壁间，距地面高约50米，以惊险奇特闻名于世，素有“悬空寺，半天高，三根马尾空中吊”的俚语，是中国古代建筑奇迹之一。",
   "tech_highlights": [
@@ -337,8 +336,8 @@
   "longitude": 120.626639,
   "latitude": 31.328643,
   "images": [
-    "/images/buildings/VCG211264929306.jpg",
-    "/images/buildings/VCG211434240142.jpg"
+    "images/buildings/VCG211264929306.jpg",
+    "images/buildings/VCG211434240142.jpg"
   ],
   "description": "苏州古典园林是世界文化遗产，以拙政园、留园、网师园、环秀山庄等为代表，是中国古典园林的杰出代表，以写意山水的高超艺术手法，蕴含浓厚的中国传统思想和文化内涵，被誉为“咫尺之内再造乾坤”。",
   "tech_highlights": [
@@ -368,7 +367,7 @@
   "longitude": 113.095998,
   "latitude": 34.466746,
   "images": [
-    "/images/buildings/VCG211407199522.jpg"
+    "images/buildings/VCG211407199522.jpg"
   ],
   "description": "嵩岳寺塔是中国现存最早的砖塔，也是中国唯一的十二边形塔，历经1500年风雨仍完好无损，是中国古代砖构建筑的杰出代表。塔高37.045米，底层直径10.6米，塔身由青砖黄泥砌筑而成，造型优美，线条流畅。",
   "tech_highlights": [
@@ -398,7 +397,7 @@
   "longitude": 116.987322,
   "latitude": 35.597532,
   "images": [
-    "/images/buildings/VCG211401883496.jpg"
+    "images/buildings/VCG211401883496.jpg"
   ],
   "description": "曲阜孔庙又称“阙里至圣庙”，是祭祀中国古代著名思想家和教育家孔子的祠庙，是中国现存规模最大的古建筑群之一，与北京故宫、承德避暑山庄并列为中国三大古建筑群。庙内共有九进院落，建筑464间，南北长1300多米，占地14万平方米。",
   "tech_highlights": [
@@ -428,8 +427,8 @@
   "longitude": 117.128976,
   "latitude": 24.628036,
   "images": [
-    "/images/buildings/VCG211549623004.jpg",
-    "/images/buildings/VCG211452549687.jpg"
+    "images/buildings/VCG211549623004.jpg",
+    "images/buildings/VCG211452549687.jpg"
   ],
   "description": "福建土楼是世界上独一无二的山区大型夯土民居建筑，以生土作为主要建筑材料，掺上细沙、石灰、糯米饭、红糖、竹片、木条等，经过反复揉、舂、压建造而成，具有聚族而居、防盗、防震、防兽、防火、防潮、通风采光、冬暖夏凉等特点。2008年被列入世界文化遗产名录。",
   "tech_highlights": [
