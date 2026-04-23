@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Noto Serif SC', 'SimSun', serif;
+    background-color: #F7F7F7;
+    color: #1D1D1F;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  .cn-card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow duration-300;
+  }
+  
+  .cn-btn {
+    @apply px-6 py-2 rounded-md font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .cn-btn-primary {
+    @apply cn-btn bg-cn-red text-white hover:bg-cn-red-light focus:ring-cn-red;
+  }
+  
+  .cn-btn-secondary {
+    @apply cn-btn bg-white text-cn-black border border-gray-300 hover:bg-gray-50 focus:ring-gray-400;
+  }
+}
