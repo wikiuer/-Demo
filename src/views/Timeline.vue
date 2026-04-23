@@ -341,7 +341,7 @@ function handleResize() {
 
 onMounted(async () => {
   try {
-    const res = await fetch('/data/buildings.json')
+    const res = await fetch('data/buildings.json')
     allBuildings.value = await res.json()
   } catch (e) {
     console.error('加载建筑数据失败', e)

@@ -237,7 +237,7 @@ function goToSlide(index) {
 
 onMounted(async () => {
   try {
-    const res = await fetch('/data/buildings.json')
+    const res = await fetch('data/buildings.json')
     const buildings = await res.json()
     // 指定轮播建筑：故宫、万里长城、颐和园、布达拉宫
     const carouselIds = ['forbidden-city', 'great-wall', 'summer-palace', 'potala-palace']
