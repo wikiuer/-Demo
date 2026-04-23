@@ -164,7 +164,7 @@
     <footer class="bg-cn-black text-white py-12 section" ref="entrySection">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          <router-link :to="/architecture" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
+          <router-link :to="/architecture/" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
             <div class="w-12 h-12 bg-cn-red/20 rounded-full flex items-center justify-center mb-4 text-cn-red text-2xl group-hover:scale-110 transition-transform duration-300">
               🏛️
             </div>
@@ -174,7 +174,7 @@
               开始探索 →
             </span>
           </router-link>
-          <router-link :to="/timeline" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
+          <router-link :to="/timeline/" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
             <div class="w-12 h-12 bg-cn-yellow/20 rounded-full flex items-center justify-center mb-4 text-cn-yellow text-2xl group-hover:scale-110 transition-transform duration-300">
               📜
             </div>
@@ -184,7 +184,7 @@
               穿越时空 →
             </span>
           </router-link>
-          <router-link :to="/interactive" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
+          <router-link :to="/interactive/" class="group flex flex-col items-center text-center p-6 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
             <div class="w-12 h-12 bg-cn-cyan/20 rounded-full flex items-center justify-center mb-4 text-cn-cyan text-2xl group-hover:scale-110 transition-transform duration-300">
               🎮
             </div>
