@@ -35,21 +35,26 @@
       </div>
 
       <!-- 右上角统计面板 -->
-      <div class="absolute right-20 top-32 z-20 bg-white/90 backdrop-blur-sm rounded-lg shadow-xl p-4 min-w-[180px] border border-gray-100">
-        <h3 class="text-lg font-bold text-cn-black mb-3 font-serif">建筑统计</h3>
-        <div class="space-y-2">
-          <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">总计</span>
-            <span class="font-bold text-cn-red">{{ allBuildings.length }}</span>
-          </div>
-          <div v-for="item in dynastyStats" :key="item.dynasty" class="flex justify-between items-center">
-            <span class="text-xs text-gray-600 flex items-center gap-1">
-              <span class="w-2 h-2 rounded-full" :style="{ backgroundColor: getDynastyColor(item.dynasty) }"></span>
-              {{ item.dynasty }}
-            </span>
-            <span class="text-xs font-medium">{{ item.count }}</span>
-          </div>
+      <div class="absolute right-20 top-32 z-20 bg-white/90 backdrop-blur-sm rounded-lg shadow-xl border border-gray-100 overflow-hidden">
+        <div @click="statsExpanded = !statsExpanded" class="p-3 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors">
+          <h3 class="text-lg font-bold text-cn-black font-serif m-0">建筑统计</h3>
+          <span class="text-gray-500 transition-transform duration-300" :class="{ 'rotate-180': statsExpanded }">▼</span>
         </div>
+        <transition name="filterExpand">
+          <div v-if="statsExpanded" class="p-3 space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-gray-600">总计</span>
+              <span class="font-bold text-cn-red">{{ allBuildings.length }}</span>
+            </div>
+            <div v-for="item in dynastyStats" :key="item.dynasty" class="flex justify-between items-center">
+              <span class="text-xs text-gray-600 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full" :style="{ backgroundColor: getDynastyColor(item.dynasty) }"></span>
+                {{ item.dynasty }}
+              </span>
+              <span class="text-xs font-medium">{{ item.count }}</span>
+            </div>
+          </div>
+        </transition>
       </div>
 
       <!-- 右下角筛选面板 -->
@@ -123,6 +128,7 @@ const currentBuilding = ref(null)
 const allBuildings = ref([])
 const selectedDynasty = ref(['all'])
 const filterExpanded = ref(true)
+const statsExpanded = ref(true)
 
 // 朝代颜色配置
 const dynastyColors = {
@@ -368,8 +374,8 @@ onUnmounted(() => {
 
   .absolute.right-20.top-32 {
     top: 120px !important;
-    min-width: 140px !important;
-    padding: 12px !important;
+    min-width: 120px !important;
+    max-width: 160px !important;
   }
 
   .absolute.right-20.bottom-32 {
