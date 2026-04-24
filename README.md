@@ -1,5 +1,89 @@
-# Vue 3 + Vite
+# 古建筑数字化展示平台
+Ancient Architecture Digital Exhibition Platform
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 项目简介
+本项目是面向中国古建筑文化传播的数字化展示平台，以现代Web技术为载体，打破时空限制，为用户提供沉浸式的古建筑文化科普体验。项目响应国家文化数字化战略，致力于将中国优秀传统建筑文化以更生动、更易接触的形式呈现给大众，解决古建筑实体参观受地域、时间限制的痛点，助力传统文化的传承与传播。
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## ✨ 核心功能
+- **首页展示**：平台介绍、核心功能入口、文化价值传递
+- **古建筑库**：完整的古建筑列表与详情展示，包含建筑历史、结构特点、文化背景等多维度信息
+- **历史时间线**：按朝代时序展示中国古建筑发展历程，直观呈现建筑风格演变脉络
+- **3D交互地图**：基于Three.js实现的古建筑地理分布地图，支持空间维度浏览
+- **沉浸式交互体验**：结合GSAP动效的交互式建筑探索功能
+- **AI智能助手**：集成AI聊天问答能力，随时解答古建筑相关知识疑问
+- **知识问答功能**：趣味答题模块，巩固古建筑知识学习成果
+
+## 🛠 技术栈
+- 前端框架：Vue 3 (Composition API + <script setup>)
+- 构建工具：Vite
+- 路由管理：Vue Router 4
+- UI组件库：Arco Design Vue
+- 样式方案：TailwindCSS + PostCSS
+- 3D渲染：Three.js
+- 动效引擎：GSAP
+- 网络请求：Axios
+- 部署方案：GitHub Pages
+
+## 🚀 快速开始
+### 环境要求
+- Node.js >= 16.0.0
+- npm >= 8.0.0
+
+### 开发模式
+```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+```
+
+### 生产构建
+```bash
+# 构建生产版本
+npm run build
+
+# 预览构建产物
+npm run preview
+```
+
+### 部署
+项目已配置GitHub Pages自动部署：
+```bash
+npm run deploy
+```
+
+## 🎯 项目亮点
+### 文化价值
+- 聚焦中国传统文化传播，具备明确的社会价值和科普意义
+- 内容覆盖多朝代、多地域的典型古建筑，资料完整度高
+- 适合作为文化教育、科普宣传的数字化工具使用
+
+### 技术创新
+- 采用Three.js实现3D可视化展示，提供沉浸式交互体验
+- GSAP动效系统打造流畅的页面过渡和交互反馈
+- 模块化架构设计，具备良好的扩展性，可快速接入更多功能模块
+- 响应式设计，支持多终端访问适配
+
+### 用户体验
+- 简洁直观的界面设计，降低学习成本
+- 多维度的内容展示形式，满足不同用户的浏览需求
+- AI助手+问答系统形成完整的知识获取闭环
+
+## 📂 项目结构
+```
+├── public/          # 静态资源
+│   ├── data/        # 古建筑基础数据
+│   └── images/      # 建筑图片资源
+├── src/
+│   ├── components/  # 公共组件
+│   ├── views/       # 页面组件
+│   ├── router/      # 路由配置
+│   ├── App.vue      # 根组件
+│   └── main.js      # 入口文件
+├── package.json     # 项目配置
+└── vite.config.js   # Vite配置
+```
+
+## 📄 许可证
+MIT License

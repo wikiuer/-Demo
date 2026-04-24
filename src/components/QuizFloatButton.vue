@@ -12,12 +12,21 @@
   <!-- 永久称号徽章，仅最终测试通过后显示 -->
   <transition name="fade-scale">
     <div
+      ref="badgeRef"
       v-if="isFinalTestPassed && !isInteractivePage"
-      class="fixed bottom-6 right-6 px-4 py-2 rounded-full bg-gradient-to-r from-cn-red via-cn-yellow to-cn-cyan text-white shadow-lg z-[998] flex items-center gap-2 cursor-pointer hover:scale-105 transition-all"
-      title="你已通过古建筑知识最终测试，获得「古建筑知识小能手」称号"
+      class="fixed rounded-full bg-gradient-to-r from-cn-red via-cn-yellow to-cn-cyan text-white shadow-lg z-[998] flex items-center gap-2 cursor-pointer hover:scale-105 transition-all select-none"
+      :style="{
+        left: `${badgeLeft}px`,
+        top: `${badgeTop}px`,
+        padding: showBadgeText ? '8px 16px' : '8px'
+      }"
+      title="你已通过古建筑知识最终测试，获得「古建筑知识小能手」称号，点击可收起/展开，长按可拖动"
+      @touchstart="onBadgeTouchStart"
+      @mousedown="onBadgeMouseDown"
+      @click="toggleBadgeText"
     >
       <span>🏆</span>
-      <span class="font-bold text-sm">古建筑知识小能手</span>
+      <span v-if="showBadgeText" class="font-bold text-sm whitespace-nowrap">古建筑知识小能手</span>
     </div>
   </transition>
   <!-- 答题弹窗 -->
@@ -96,9 +105,10 @@
   </transition>
 </template>
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
+const emit = defineEmits(['wrongAnswer'])
 // 判断是否是互动体验页面
 const isInteractivePage = computed(() => route.path === '/interactive')
 const showFloatButton = ref(false)
@@ -107,6 +117,56 @@ const showQuizModal = ref(false)
 const quizAttemptCount = ref(Number(localStorage.getItem('quiz_attempt_count') || 0)) // 答题次数
 const isFinalTestPassed = ref(Boolean(localStorage.getItem('quiz_final_passed') === 'true')) // 最终测试是否通过
 const isFinalTest = computed(() => quizAttemptCount.value >= 2) // 第三次是最终测试
+
+// 称号徽章拖动/收起功能
+const badgeLeft = ref(Number(localStorage.getItem('quiz_badge_left') || 0))
+const badgeTop = ref(Number(localStorage.getItem('quiz_badge_top') || 0))
+const isDragging = ref(false)
+const dragOffset = ref({ x: 0, y: 0 })
+const hasDragged = ref(false)
+const showBadgeText = ref(true) // 控制文字显示
+const badgeRef = ref(null) // 徽章DOM引用
+
+// 初始化徽章位置
+function initBadgePosition() {
+  const savedLeft = localStorage.getItem('quiz_badge_left')
+  const savedTop = localStorage.getItem('quiz_badge_top')
+  
+  if (savedLeft && savedTop) {
+    badgeLeft.value = Number(savedLeft)
+    badgeTop.value = Number(savedTop)
+  } else {
+    // 默认右下角位置
+    const badgeWidth = showBadgeText.value ? 180 : 40
+    const badgeHeight = 40
+    badgeLeft.value = window.innerWidth - badgeWidth - 16
+    badgeTop.value = window.innerHeight - badgeHeight - 16
+  }
+  // 确保徽章在屏幕内
+  ensureBadgeInView()
+}
+
+// 保存位置到localStorage
+function saveBadgePosition() {
+  localStorage.setItem('quiz_badge_left', badgeLeft.value.toString())
+  localStorage.setItem('quiz_badge_top', badgeTop.value.toString())
+}
+
+// 确保徽章在屏幕内
+function ensureBadgeInView() {
+  const badgeWidth = showBadgeText.value ? 180 : 40
+  const badgeHeight = 40
+  // 确保 left 在范围内
+  if (badgeLeft.value < 16) badgeLeft.value = 16
+  if (badgeLeft.value > window.innerWidth - badgeWidth - 16) {
+    badgeLeft.value = window.innerWidth - badgeWidth - 16
+  }
+  // 确保 top 在范围内
+  if (badgeTop.value < 16) badgeTop.value = 16
+  if (badgeTop.value > window.innerHeight - badgeHeight - 16) {
+    badgeTop.value = window.innerHeight - badgeHeight - 16
+  }
+}
 // 基础题库（5题）
 const baseQuizQuestions = [
   { question: '中国现存最早的砖塔是？', options: ['应县木塔', '嵩岳寺塔', '赵州桥', '悬空寺'], answer: 1 },
@@ -170,6 +230,13 @@ function selectAnswer(index) {
   answered.value = true
   if (index === currentQuestion.value.answer) {
     score.value++
+  } else {
+    // 答错时触发事件，传递题目信息
+    emit('wrongAnswer', {
+      question: currentQuestion.value.question,
+      wrongAnswer: currentQuestion.value.options[index],
+      correctAnswer: currentQuestion.value.options[currentQuestion.value.answer]
+    })
   }
 }
 function getAnswerClass(index) {
@@ -209,6 +276,136 @@ function closeQuiz() {
   showQuizModal.value = false
   resetQuiz()
 }
+
+// 统一的拖动开始处理
+function startDrag(clientX, clientY) {
+  isDragging.value = true
+  hasDragged.value = false
+  dragOffset.value = {
+    x: clientX - badgeLeft.value,
+    y: clientY - badgeTop.value
+  }
+}
+
+// 统一的拖动移动处理
+function moveDrag(clientX, clientY) {
+  if (!isDragging.value) return
+  hasDragged.value = true
+  badgeLeft.value = clientX - dragOffset.value.x
+  badgeTop.value = clientY - dragOffset.value.y
+  // 限制范围不超出屏幕
+  const badgeWidth = showBadgeText.value ? 180 : 40
+  const badgeHeight = 40
+  if (badgeLeft.value < 16) badgeLeft.value = 16
+  if (badgeLeft.value > window.innerWidth - badgeWidth - 16) badgeLeft.value = window.innerWidth - badgeWidth - 16
+  if (badgeTop.value < 16) badgeTop.value = 16
+  if (badgeTop.value > window.innerHeight - badgeHeight - 16) badgeTop.value = window.innerHeight - badgeHeight - 16
+}
+
+// 统一的拖动结束处理
+function endDrag() {
+  if (!isDragging.value) return
+  isDragging.value = false
+  // 自动吸附到左右边缘
+  const badgeWidth = showBadgeText.value ? 180 : 40
+  if (badgeLeft.value > (window.innerWidth - badgeWidth) / 2) {
+    // 吸附到右侧
+    badgeLeft.value = window.innerWidth - badgeWidth - 16
+  } else {
+    // 吸附到左侧
+    badgeLeft.value = 16
+  }
+  // 确保仍在屏幕内
+  ensureBadgeInView()
+  saveBadgePosition()
+  setTimeout(() => hasDragged.value = false, 100)
+}
+
+// 触摸事件处理
+function onBadgeTouchStart(e) {
+  const touch = e.touches[0]
+  startDrag(touch.clientX, touch.clientY)
+  // 添加全局触摸移动和结束监听
+  document.addEventListener('touchmove', onTouchMoveGlobal)
+  document.addEventListener('touchend', onTouchEndGlobal)
+  e.preventDefault()
+}
+
+function onBadgeTouchMove(e) {
+  const touch = e.touches[0]
+  moveDrag(touch.clientX, touch.clientY)
+  e.preventDefault()
+}
+
+function onBadgeTouchEnd() {
+  endDrag()
+}
+
+// 全局触摸事件处理
+function onTouchMoveGlobal(e) {
+  if (!isDragging.value) return
+  const touch = e.touches[0]
+  moveDrag(touch.clientX, touch.clientY)
+  e.preventDefault()
+}
+
+function onTouchEndGlobal() {
+  endDrag()
+  // 移除全局监听
+  document.removeEventListener('touchmove', onTouchMoveGlobal)
+  document.removeEventListener('touchend', onTouchEndGlobal)
+}
+
+// 鼠标事件处理
+function onBadgeMouseDown(e) {
+  startDrag(e.clientX, e.clientY)
+  // 添加全局鼠标事件监听
+  document.addEventListener('mousemove', onMouseMove)
+  document.addEventListener('mouseup', onMouseUp)
+  e.preventDefault()
+}
+
+function onMouseMove(e) {
+  moveDrag(e.clientX, e.clientY)
+}
+
+function onMouseUp() {
+  endDrag()
+  // 移除全局鼠标事件监听
+  document.removeEventListener('mousemove', onMouseMove)
+  document.removeEventListener('mouseup', onMouseUp)
+}
+
+// 点击切换徽章文字显示
+function toggleBadgeText() {
+  if (hasDragged.value) return // 拖动时不触发点击
+  const wasShown = showBadgeText.value
+  const oldWidth = wasShown ? 180 : 40
+  const newWidth = wasShown ? 40 : 180
+  showBadgeText.value = !wasShown
+  
+  // 调整位置以保持吸附状态（保持右边缘不变如果之前在右侧）
+  const screenWidth = window.innerWidth
+  const threshold = (screenWidth - oldWidth) / 2
+  if (badgeLeft.value > threshold) {
+    // 之前吸附右侧，保持右边缘不变
+    badgeLeft.value = screenWidth - newWidth - 16
+  }
+  // 确保仍在屏幕内
+  ensureBadgeInView()
+  saveBadgePosition()
+}
+
+// 监听文字显示变化，调整位置
+watch(showBadgeText, (newVal) => {
+  // 可以在这里做额外处理，如果需要
+})
+
+// 窗口大小变化时调整徽章位置
+function handleResize() {
+  // 使用统一的安全检查函数
+  ensureBadgeInView()
+}
 // 操作计数处理
 const handleActionCount = () => {
   // 最终测试通过后不再计数
@@ -234,8 +431,12 @@ const handleGlobalScroll = () => {
   }
 }
 onMounted(() => {
-  // 最终测试通过后永远不显示按钮
-  if (isFinalTestPassed.value) return
+  // 最终测试通过后初始化徽章位置
+  if (isFinalTestPassed.value) {
+    nextTick(() => {
+      initBadgePosition()
+    })
+  }
   // 初始化检查是否已经达到触发条件
   const count = Number(localStorage.getItem('quiz_action_count') || 0)
   if (count >= getTriggerThreshold()) {
@@ -244,12 +445,14 @@ onMounted(() => {
   // 全局监听事件
   document.addEventListener('click', handleGlobalClick)
   document.addEventListener('scroll', handleGlobalScroll)
+  // 添加窗口大小变化监听
+  window.addEventListener('resize', handleResize)
 })
 // 页面卸载时移除监听
-import { onUnmounted } from 'vue'
 onUnmounted(() => {
   document.removeEventListener('click', handleGlobalClick)
   document.removeEventListener('scroll', handleGlobalScroll)
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 <style scoped>
@@ -290,5 +493,12 @@ onUnmounted(() => {
 }
 .btn-ancient:hover::before {
   left: 100%;
+}
+
+/* 拖动徽章优化 */
+.select-none {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
 }
 </style>

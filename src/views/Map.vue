@@ -242,6 +242,8 @@ function addMarkers() {
     // 点击事件
     marker.on('click', () => {
       currentBuilding.value = building
+      // 平滑缩放到标点位置
+      map.value.setZoomAndCenter(10, [building.longitude, building.latitude], true, 800)
     })
 
     // 悬浮显示弹跳效果
@@ -277,6 +279,8 @@ function resetMap() {
 // 关闭弹窗
 function closePopup() {
   currentBuilding.value = null
+  // 平滑缩放回全国视图
+  map.value.setZoomAndCenter(4.5, [104.195397, 35.86166], true, 800)
 }
 
 // 监听筛选变化

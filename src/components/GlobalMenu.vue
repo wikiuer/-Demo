@@ -15,8 +15,8 @@
     <transition name="menu">
       <div v-if="isOpen" ref="menuPanel" class="fixed top-0 left-0 h-screen w-96 bg-gradient-to-b from-cn-white to-gray-50 shadow-2xl p-8 pt-28 border-r border-gray-100">
         <!-- 装饰元素 -->
-        <div class="absolute top-8 left-8 text-2xl font-serif text-cn-red font-bold">
-          中国传统建筑
+        <div class="absolute top-8 left-8 text-xl font-serif text-cn-red font-bold">
+          筑梦千年：中国古建筑技艺演进博物馆
         </div>
         <div class="absolute top-14 left-8 w-16 h-1 bg-cn-red rounded-full"></div>
 

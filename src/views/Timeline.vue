@@ -37,7 +37,9 @@
                 <div class="absolute -top-2 left-0 w-2 h-2 bg-gray-400 rounded-tl-sm border-t border-l border-gray-500"></div>
                 <div class="absolute -top-2 right-0 w-2 h-2 bg-gray-400 rounded-tr-sm border-t border-r border-gray-500"></div>
                 <div v-if="['qin', 'han', 'three-kingdoms', 'sui', 'tang', 'song', 'yuan', 'ming'].includes(dynasty.id)" class="absolute -left-2 top-1/2 -translate-y-1/2 w-3 h-4 bg-gray-400 rounded-l-sm border-l-2 border-l-gray-500"></div>
-                <div v-if="activeDynasty === dynasty.id" class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs">•</div>
+                <div class="absolute inset-0 flex items-center justify-center font-bold text-xs" :class="activeDynasty === dynasty.id ? 'text-white' : 'text-gray-700'">
+                  {{ dynastyShortNames[dynasty.id] }}
+                </div>
               </div>
               <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-white shadow-lg px-3 py-1.5 rounded text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none border border-gray-100">
                 {{ dynasty.name }}
@@ -126,8 +128,6 @@
                   :key="buildingId"
                   class="bg-white rounded-lg shadow-sm p-4 border border-gray-100 hover:shadow-md transition-all cursor-pointer flex items-center gap-4 group"
                   @click="goToBuilding(buildingId)"
-                  @mouseenter="features.preview3d.enabled && isDesktop && show3dPreviewOnHover(buildingId, $event)"
-                  @mouseleave="features.preview3d.enabled && isDesktop && hide3dPreview()"
                 >
                   <div class="w-16 h-16 rounded overflow-hidden flex-shrink-0">
                     <img
@@ -179,17 +179,27 @@ const expandRef = ref(null)
 
 // 功能配置
 const features = ref({
-  preview3d: { enabled: false },
   panorama: { enabled: false }
 })
 
 // 判断是否为桌面端
 const isDesktop = ref(window.innerWidth >= 768)
 
-// 3D预览相关空实现
-function show3dPreviewOnHover() {}
-function hide3dPreview() {}
+// 功能空实现
 function openPanorama() {}
+
+// 朝代简称映射
+const dynastyShortNames = {
+  'qin': '秦',
+  'han': '汉',
+  'three-kingdoms': '三',
+  'sui': '隋',
+  'tang': '唐',
+  'song': '宋',
+  'yuan': '元',
+  'ming': '明',
+  'qing': '清'
+}
 
 // 朝代数据
 const dynasties = [
