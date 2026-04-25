@@ -140,14 +140,15 @@
     "related": []
   },
   {
-  "id": "yingxian-wooden-pagoda",
-  "name": "应县木塔",
-  "dynasty": "辽",
-  "year": "公元1056年建成",
-  "location": "山西省朔州市应县",
-  "type": "佛塔",
-  "longitude": 113.188655,
-  "latitude": 39.581886,
+   "id": "yingxian-wooden-pagoda",
+   "name": "应县木塔",
+   "dynasty": "辽",
+   "year": "公元1056年建成",
+   "location": "山西省朔州市应县",
+   "type": "佛塔",
+   "model": "yingzhoumuta.glb",
+   "longitude": 113.188655,
+   "latitude": 39.581886,
   "images": [
     "images/buildings/VCG211395857873.jpg",
     "images/buildings/VCG211419677586.jpg",
@@ -209,8 +210,9 @@
   "dynasty": "吐蕃至清",
   "year": "始建于公元7世纪，现存主体为17世纪重建",
   "location": "西藏自治区拉萨市",
-  "type": "宫殿建筑群",
-  "longitude": 91.122694,
+    "type": "宫殿建筑群",
+    "model": "budalagong.glb",
+    "longitude": 91.122694,
   "latitude": 29.655893,
   "images": [
     "images/buildings/VCG211422642640.jpg",
@@ -424,6 +426,7 @@
     "year": "最早的土楼始建于元代，现存多数为明清至近现代建造",
     "location": "福建省龙岩市、漳州市",
     "type": "民居建筑群",
+    "model": "tulou.glb",
     "longitude": 117.128976,
     "latitude": 24.628036,
     "images": [
@@ -637,6 +640,7 @@
     "year": "公元707年建造",
     "location": "陕西省西安市碑林区",
     "type": "佛塔",
+    "model": "xiaoyanta.glb",
     "longitude": 108.947654,
     "latitude": 34.257643,
     "images": [
@@ -753,13 +757,14 @@
     "structure": "永乐宫占地面积约12.7万平方米，中轴线上依次排列着龙虎殿、三清殿、纯阳殿、重阳殿四座元代建筑，各殿内均保存有精美的元代壁画，总面积达1005.68平方米，是中国古代壁画艺术的宝库。",
     "related": ["fujian-tulou", "mogao-grottoes"]
   },
-  {
+   {
     "id": "guanque-tower",
     "name": "鹳雀楼",
     "dynasty": "北周至现代",
     "year": "始建于北周时期，现存为2002年复建",
     "location": "山西省运城市永济市",
     "type": "楼阁",
+    "model": "guanhelou.glb",
     "longitude": 110.345678,
     "latitude": 34.876543,
     "images": [

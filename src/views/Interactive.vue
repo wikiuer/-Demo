@@ -29,7 +29,7 @@
           class="bg-white/95 backdrop-blur-md rounded-xl shadow-md border border-gray-100/50 cursor-pointer relative group overflow-hidden feature-card transition-all duration-500 ease-in-out"
           :class="[
             activeFeature === 'quiz' ? 'w-full md:w-3/4 active-feature' : 'w-full md:w-1/4 inactive-feature',
-            activeFeature === 'panorama' ? 'opacity-70 scale-95' : ''
+            activeFeature === 'panorama' || activeFeature === '3d' ? 'opacity-70 scale-95' : ''
           ]"
         >
           <!-- 边角回纹装饰 -->
@@ -89,12 +89,12 @@
                         <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                           <div class="h-full bg-cn-red rounded-full progress-bar" :style="{ width: `${(quizIndex + 1) / quizQuestions.length * 100}%` }"></div>
                         </div>
+                       </div>
+                        <div class="score-display">
+                          <span class="text-sm font-medium text-cn-red text-lg">得分：<span class="count-up">{{ score }}</span> / {{ quizQuestions.length }}</span>
+                        </div>
                       </div>
-                      <div class="score-display">
-                        <span class="text-sm font-medium text-cn-red text-lg">得分：<span class="count-up">{{ score }}</span> / {{ quizQuestions.length }}</span>
-                      </div>
-                    </div>
-                    <transition name="fade-slide" mode="out-in">
+                      <transition name="fade-slide" mode="out-in">
                       <div :key="quizIndex" class="bg-white/50 backdrop-blur-sm rounded-xl p-6 md:p-8 mb-8 shadow-lg question-card">
                         <h3 class="text-xl md:text-2xl font-bold text-cn-black mb-6 font-serif">{{ currentQuestion.question }}</h3>
                         <div class="space-y-4">
@@ -137,22 +137,22 @@
                         <button @click="resetQuiz" class="px-8 py-4 bg-cn-red text-white rounded-lg hover:bg-cn-red/90 transition-all btn-ancient text-lg shadow-lg hover:shadow-xl hover:-translate-y-1">
                           重新测验
                         </button>
-                      </div>
-                    </transition>
-                  </div>
-                </div>
-              </transition>
-            </div>
-          </transition>
+              </div>
+            </transition>
+          </div>
         </div>
+      </transition>
+    </div>
+  </transition>
+</div>
 
-        <!-- 右侧功能卡片：全景浏览 -->
+         <!-- 右侧功能卡片：全景浏览 -->
         <div 
           @click="switchFeature('panorama')"
           class="bg-white/95 backdrop-blur-md rounded-xl shadow-md border border-gray-100/50 cursor-pointer relative group overflow-hidden feature-card transition-all duration-500 ease-in-out"
           :class="[
             activeFeature === 'panorama' ? 'w-full md:w-3/4 active-feature' : 'w-full md:w-1/4 inactive-feature',
-            activeFeature === 'quiz' ? 'opacity-70 scale-95' : ''
+            activeFeature === 'quiz' || activeFeature === '3d' ? 'opacity-70 scale-95' : ''
           ]"
         >
           <!-- 边角回纹装饰 -->
@@ -242,21 +242,145 @@
                   </div>
                   <h3 class="text-xl font-bold text-cn-black mb-1 group-hover:text-cn-red transition-colors">{{ building.name }}</h3>
                   <p class="text-sm text-gray-600">{{ building.dynasty }} · {{ building.type }}</p>
-                </div>
+               </div>
               </div>
             </div>
-          </transition>
+            </transition>
+          </div>
         </div>
       </div>
-    </div>
+
+     <!-- 3D模型功能卡片（独立布局） -->
+     <div class="mt-12">
+       <div 
+         @click="switchFeature('3d')"
+         class="bg-white/95 backdrop-blur-md rounded-xl shadow-md border border-gray-100/50 cursor-pointer relative group overflow-hidden feature-card transition-all duration-500 ease-in-out"
+         :class="[
+           activeFeature === '3d' ? 'w-full active-feature' : 'w-full',
+         ]"
+         >
+           <!-- 边角回纹装饰 -->
+           <svg class="absolute top-0 left-0 w-10 h-10 text-cn-red/30 pointer-events-none" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path d="M0 0H8V2H2V8H0V0Z" fill="currentColor"/>
+             <path d="M4 4H6V6H4V4Z" fill="currentColor"/>
+           </svg>
+           <svg class="absolute top-0 right-0 w-10 h-10 text-cn-red/30 pointer-events-none" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path d="M24 0H16V2H22V8H24V0Z" fill="currentColor"/>
+             <path d="M20 4H18V6H20V4Z" fill="currentColor"/>
+           </svg>
+           <svg class="absolute bottom-0 left-0 w-10 h-10 text-cn-red/30 pointer-events-none" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path d="M0 24H8V22H2V16H0V24Z" fill="currentColor"/>
+             <path d="M4 20H6V18H4V20Z" fill="currentColor"/>
+           </svg>
+           <svg class="absolute bottom-0 right-0 w-10 h-10 text-cn-red/30 pointer-events-none" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path d="M24 24H16V22H22V16H24V0Z" fill="currentColor"/>
+             <path d="M20 20H18V18H20V20Z" fill="currentColor"/>
+           </svg>
+           
+           <!-- hover墨韵扩散效果 -->
+           <div class="absolute inset-0 bg-cn-red/0 group-hover:bg-cn-red/8 transition-all duration-700 rounded-xl scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 ink-spread"></div>
+         
+           <!-- 卡片头部 -->
+           <div class="p-8 text-center">
+             <div class="text-6xl mb-4 relative z-10 group-hover:scale-120 transition-all duration-500 feature-icon">🏗️</div>
+             <h3 class="text-2xl font-bold text-cn-black mb-3 relative z-10 font-serif group-hover:text-cn-red transition-colors">3D模型</h3>
+             <p v-if="activeFeature !== '3d'" class="text-gray-600 text-base relative z-10 group-hover:text-gray-800 transition-colors">3D交互探索古建筑</p>
+             
+             <!-- 模块装饰线 -->
+             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-1.5 bg-gradient-to-r from-transparent via-cn-red to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+             
+             <!-- 已选标记 -->
+             <div v-if="activeFeature === '3d'" class="absolute top-4 right-4 bg-cn-red text-white text-xs font-bold px-3 py-1 rounded-full rotate-3 shadow-lg selected-badge">
+               已选择
+             </div>
+           </div>
+
+           <!-- 展开内容：3D模型预览 -->
+           <transition name="fade-up" mode="out-in">
+             <div v-if="activeFeature === '3d'" class="px-4 md:px-8 pb-8 pt-0 3d-container">
+               <h2 class="text-3xl font-bold text-cn-black mb-6 font-serif text-center">🏗️ 3D模型探索</h2>
+   <p class="text-gray-600 mb-4 text-center">当前展示：{{ allBuildings.find(b => b.id === selectedBuildingFor3D)?.name || '应县木塔' }}</p>
+  
+  <!-- 模型选择 -->
+  <div class="flex flex-wrap gap-2 mb-4 justify-center">
+     <button 
+       v-for="building in allBuildings.filter(b => b.model)" 
+       :key="building.id"
+       @click="selectedBuildingFor3D = building.id"
+       class="px-3 py-1.5 rounded-lg text-sm transition-all"
+       :class="selectedBuildingFor3D === building.id ? 'bg-cn-red text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+     >
+      {{ building.name }}
+    </button>
   </div>
+  
+  <!-- 操作工具栏 -->
+  <div class="flex flex-wrap gap-3 mb-4 justify-center">
+                 <button @click="toggleAutoRotate" class="px-4 py-2 bg-cn-red text-white rounded-lg hover:bg-cn-red/90 transition-all btn-ancient shadow-sm">
+                   {{ autoRotate ? '⏸️ 停止自动旋转' : '▶️ 开启自动旋转' }}
+                 </button>
+                 <button @click="resetView" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all shadow-sm">
+                   🔄 重置视角
+                 </button>
+               </div>
+               
+               <!-- 3D画布容器 -->
+               <div 
+                 ref="canvasContainer"
+                 class="w-full h-[500px] rounded-xl overflow-hidden bg-gray-100 relative"
+               >
+                 <!-- 加载状态 -->
+                 <div v-if="modelLoading" class="absolute inset-0 flex flex-col items-center justify-center bg-white/80 z-10">
+                   <div class="w-16 h-16 border-4 border-cn-red border-t-transparent rounded-full animate-spin mb-4"></div>
+                   <p class="text-gray-600">3D模型加载中...</p>
+                 </div>
+                 <!-- 错误提示 -->
+                 <div v-if="modelError" class="absolute inset-0 flex flex-col items-center justify-center bg-white/80 z-10">
+                   <div class="text-4xl mb-4">❌</div>
+                   <p class="text-gray-600 mb-2">模型加载失败</p>
+                    <button @click="loadModel" class="px-4 py-2 bg-cn-red text-white rounded-lg hover:bg-cn-red/90 transition-all btn-ancient">
+                      重新加载
+                    </button>
+                 </div>
+                 <!-- 操作提示 -->
+                 <div class="absolute bottom-4 left-4 bg-black/50 text-white text-xs px-3 py-2 rounded-lg backdrop-blur-sm z-10">
+                   操作提示：拖拽旋转 | 滚轮缩放 | 右键平移
+                 </div>
+                 <!-- 知识点弹窗 -->
+                 <div v-if="showHotspotInfo" class="absolute top-4 right-4 bg-white rounded-xl shadow-lg p-4 max-w-xs z-10 border border-gray-200">
+                   <div class="flex justify-between items-start mb-2">
+                     <h4 class="font-bold text-cn-red text-lg">{{ currentHotspot.title }}</h4>
+                     <button @click="showHotspotInfo = false" class="text-gray-500 hover:text-gray-700">×</button>
+                   </div>
+                   <p class="text-gray-700 text-sm">{{ currentHotspot.content }}</p>
+                 </div>
+               </div>
+               
+               <!-- 应县木塔简介 -->
+               <div class="mt-6 bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-gray-100">
+                 <h3 class="text-xl font-bold text-cn-black mb-2 font-serif">应县木塔</h3>
+                 <p class="text-gray-700">
+                   应县木塔全称佛宫寺释迦塔，是中国现存最高最古的木结构塔式建筑，也是世界上现存最高的木结构古建筑，
+                   与意大利比萨斜塔、巴黎埃菲尔铁塔并称"世界三大奇塔"。塔高67.31米，底层直径30.27米，
+                   呈平面八角形，全塔耗材红松木料3000立方米，2600多吨，纯木结构、无钉无铆，
+                   历经近千年风雨、多次地震仍完好无损。
+                 </p>
+               </div>
+             </div>
+           </transition>
+       </div>
+     </div>
+   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick, computed } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import gsap from 'gsap'
 import GlobalMenu from '../components/GlobalMenu.vue'
+import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 const router = useRouter()
 const inkMask = ref(null)
@@ -265,9 +389,34 @@ const allBuildings = ref([])
 const activeFeature = ref('quiz')
 const switching = ref(false)
 
+// 3D模型相关变量
+const canvasContainer = ref(null)
+let scene = null
+let camera = null
+let renderer = null
+let controls = null
+let model = null
+const modelLoading = ref(false)
+const modelError = ref(false)
+const autoRotate = ref(true)
+let currentLoadId = 0 // 解决模型加载竞态问题
+const showHotspotInfo = ref(false)
+const currentHotspot = ref({ title: '', content: '' })
+const selectedBuildingFor3D = ref('yingxian-wooden-pagoda')
+let abortController = null // 用于取消未完成的模型加载请求
+
+// 监听选中模型变化，自动加载
+watch(selectedBuildingFor3D, (newId) => {
+  if (newId && activeFeature.value === '3d') {
+    loadModel(newId)
+  }
+})
+let animationId = null
+
 const featureList = [
   { id: 'quiz', icon: '🧠', title: '知识测验', description: '测试你的古建筑知识' },
-  { id: 'panorama', icon: '🌍', title: '全屏浏览', description: '360度全屏查看建筑' }
+  { id: 'panorama', icon: '🌍', title: '全屏浏览', description: '360度全屏查看建筑' },
+  { id: '3d', icon: '🏗️', title: '3D模型', description: '3D交互探索古建筑' }
 ]
 
 const dynasties = [
@@ -307,22 +456,34 @@ async function switchFeature(id) {
   if (id === activeFeature.value || switching.value) return
   switching.value = true
   
+  // 等待DOM渲染墨韵遮罩
+  await nextTick()
+  
   // 墨韵扩散动画
-  gsap.to(inkMask.value, {
-    opacity: 0.9,
-    duration: 0.3,
-    ease: 'power2.in'
-  })
+  if (inkMask.value) {
+    gsap.to(inkMask.value, {
+      opacity: 0.9,
+      duration: 0.3,
+      ease: 'power2.in'
+    })
+  }
   
   await nextTick()
   activeFeature.value = id
   
+  // 切换到3D功能时自动加载当前选中的模型
+  if (id === '3d') {
+    nextTick(() => loadModel())
+  }
+  
   setTimeout(() => {
-    gsap.to(inkMask.value, {
-      opacity: 0,
-      duration: 0.4,
-      ease: 'power2.out'
-    })
+    if (inkMask.value) {
+      gsap.to(inkMask.value, {
+        opacity: 0,
+        duration: 0.4,
+        ease: 'power2.out'
+      })
+    }
     switching.value = false
   }, 200)
 }
@@ -455,7 +616,241 @@ onMounted(async () => {
   }
 })
 
-onUnmounted(() => {})
+// 3D场景初始化
+function init3DScene() {
+  if (!canvasContainer.value || scene) return
+  
+  // 创建场景
+  scene = new THREE.Scene()
+  scene.background = new THREE.Color(0xf5f5f5)
+  
+  // 添加环境光
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.8)
+  scene.add(ambientLight)
+  
+  // 添加方向光
+  const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.6)
+  directionalLight1.position.set(10, 10, 5)
+  scene.add(directionalLight1)
+  
+  const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.4)
+  directionalLight2.position.set(-10, 10, 10)
+  scene.add(directionalLight2)
+  
+  // 创建相机
+  const containerWidth = canvasContainer.value.clientWidth
+  const containerHeight = canvasContainer.value.clientHeight
+  camera = new THREE.PerspectiveCamera(45, containerWidth / containerHeight, 0.1, 1000)
+  camera.position.set(0, 10, 20)
+  
+  // 创建渲染器
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+  renderer.setSize(containerWidth, containerHeight)
+  renderer.setPixelRatio(window.devicePixelRatio)
+  renderer.shadowMap.enabled = true
+  canvasContainer.value.appendChild(renderer.domElement)
+  
+  // 添加轨道控制器
+  controls = new OrbitControls(camera, renderer.domElement)
+  controls.enableDamping = true
+  controls.dampingFactor = 0.05
+  controls.autoRotate = autoRotate.value
+  controls.autoRotateSpeed = 0.5
+  controls.minDistance = 5
+  controls.maxDistance = 50
+  
+  // 加载模型
+  loadModel()
+  
+  // 渲染循环
+  animate()
+  
+  // 窗口大小监听
+  window.addEventListener('resize', onWindowResize)
+}
+
+// 加载GLB模型
+function loadModel(buildingId = selectedBuildingFor3D.value || 'yingxian-wooden-pagoda') {
+  // 取消之前未完成的加载请求
+  if (abortController) {
+    abortController.abort()
+    abortController = null
+  }
+  // 创建新的取消控制器
+  abortController = new AbortController()
+  
+  modelLoading.value = true
+  modelError.value = false
+  currentLoadId++ // 每次加载递增ID，解决竞态问题
+  const loadId = currentLoadId
+  
+  // 清理旧模型
+  if (model) {
+    scene.remove(model)
+    model.traverse((child) => {
+      if (child.geometry) child.geometry.dispose()
+      if (child.material) {
+        Array.isArray(child.material) 
+          ? child.material.forEach(m => m.dispose())
+          : child.material.dispose()
+      }
+    })
+    model = null
+  }
+  
+  const building = allBuildings.value.find(b => b.id === buildingId)
+  const modelFile = building?.model || 'yingzhoumuta.glb'
+  
+  const loader = new GLTFLoader()
+  loader.load(
+    `${import.meta.env.BASE_URL}models/${modelFile}`,
+    (gltf) => {
+      // 已取消或不是最新请求直接忽略
+      if (loadId !== currentLoadId || abortController?.signal.aborted) return
+      
+      model = gltf.scene
+      // 调整模型大小和位置
+      const box = new THREE.Box3().setFromObject(model)
+      const size = box.getSize(new THREE.Vector3())
+      const maxDim = Math.max(size.x, size.y, size.z)
+      const scale = 10 / maxDim
+      model.scale.setScalar(scale)
+      
+      // 居中模型
+      const center = box.getCenter(new THREE.Vector3())
+      model.position.x = -center.x * scale
+      model.position.y = -center.y * scale
+      model.position.z = -center.z * scale
+      
+      scene.add(model)
+      modelLoading.value = false
+      abortController = null
+      
+      // 添加热区（示例）
+      addHotspots()
+    },
+    (xhr) => {
+      if (abortController?.signal.aborted) return
+      console.log(`模型加载进度: ${(xhr.loaded / xhr.total * 100).toFixed(2)}%`)
+    },
+    (error) => {
+      // 取消导致的错误不需要处理
+      if (error.name === 'AbortError' || loadId !== currentLoadId || abortController?.signal.aborted) {
+        return
+      }
+      console.error('模型加载失败:', error)
+      modelLoading.value = false
+      modelError.value = true
+      abortController = null
+    },
+    abortController.signal // 传递取消信号
+  )
+}
+
+// 添加知识点热区
+function addHotspots() {
+  // 这里可以根据模型实际结构添加热区，示例添加几个热区
+  const hotspots = [
+    { position: new THREE.Vector3(0, 8, 0), title: '塔刹', content: '应县木塔塔刹由铁铸成，高10米，由基座、仰莲、相轮、圆光、仰月、宝盖、宝珠组成，制作精巧，造型优美。' },
+    { position: new THREE.Vector3(0, 3, 0), title: '斗拱结构', content: '全塔采用54种斗拱结构，不用一根铁钉，通过榫卯连接实现结构稳固，具有极强的抗震性能。' },
+    { position: new THREE.Vector3(0, 0, 0), title: '双层套筒结构', content: '采用内外双层套筒结构设计，类似现代高层建筑的剪力墙结构，极大增强了塔身的整体稳定性。' }
+  ]
+  
+  // 点击事件监听
+  const raycaster = new THREE.Raycaster()
+  const mouse = new THREE.Vector2()
+  
+  renderer.domElement.addEventListener('click', (e) => {
+    const rect = renderer.domElement.getBoundingClientRect()
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
+    
+    raycaster.setFromCamera(mouse, camera)
+    
+    // 检测点击热区
+    hotspots.forEach(hotspot => {
+      const distance = raycaster.ray.origin.distanceTo(hotspot.position)
+      if (distance < 2) {
+        currentHotspot.value = { title: hotspot.title, content: hotspot.content }
+        showHotspotInfo.value = true
+      }
+    })
+  })
+}
+
+// 渲染动画
+function animate() {
+  animationId = requestAnimationFrame(animate)
+  controls.update()
+  renderer.render(scene, camera)
+}
+
+// 窗口大小调整
+function onWindowResize() {
+  if (!canvasContainer.value || !camera || !renderer) return
+  
+  const containerWidth = canvasContainer.value.clientWidth
+  const containerHeight = canvasContainer.value.clientHeight
+  
+  camera.aspect = containerWidth / containerHeight
+  camera.updateProjectionMatrix()
+  
+  renderer.setSize(containerWidth, containerHeight)
+}
+
+// 切换自动旋转
+function toggleAutoRotate() {
+  autoRotate.value = !autoRotate.value
+  if (controls) {
+    controls.autoRotate = autoRotate.value
+  }
+}
+
+// 重置视角
+function resetView() {
+  if (controls) {
+    controls.reset()
+    camera.position.set(0, 10, 20)
+    controls.update()
+  }
+}
+
+// 销毁3D场景，释放资源
+function destroy3DScene() {
+  if (animationId) {
+    cancelAnimationFrame(animationId)
+  }
+  if (renderer) {
+    renderer.dispose()
+    if (renderer.domElement && canvasContainer.value) {
+      canvasContainer.value.removeChild(renderer.domElement)
+    }
+  }
+  if (controls) {
+    controls.dispose()
+  }
+  scene = null
+  camera = null
+  renderer = null
+  controls = null
+  model = null
+  window.removeEventListener('resize', onWindowResize)
+}
+
+// 监听功能切换，进入3D模块时初始化场景，离开时销毁
+watch(activeFeature, (newVal, oldVal) => {
+  if (newVal === '3d') {
+    nextTick(() => {
+      init3DScene()
+    })
+  } else if (oldVal === '3d') {
+    destroy3DScene()
+  }
+})
+
+onUnmounted(() => {
+  destroy3DScene()
+})
 </script>
 
 <style scoped>

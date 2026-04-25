@@ -124,7 +124,9 @@ function startAnimation() {
   const tl = gsap.timeline({
     onComplete: () => {
       // 动画结束后显示点击提示
-      gsap.to(hintRef.value, { opacity: 1, duration: 0.8 })
+      if (hintRef.value) {
+        gsap.to(hintRef.value, { opacity: 1, duration: 0.8 })
+      }
       // 5秒后自动跳转
       setTimeout(handleComplete, 5000)
     }
