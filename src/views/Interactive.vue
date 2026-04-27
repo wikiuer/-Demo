@@ -301,18 +301,32 @@
                <h2 class="text-3xl font-bold text-cn-black mb-6 font-serif text-center">🏗️ 3D模型探索</h2>
    <p class="text-gray-600 mb-4 text-center">当前展示：{{ allBuildings.find(b => b.id === selectedBuildingFor3D)?.name || '应县木塔' }}</p>
   
-  <!-- 模型选择 -->
-  <div class="flex flex-wrap gap-2 mb-4 justify-center">
-     <button 
-       v-for="building in allBuildings.filter(b => b.model)" 
-       :key="building.id"
-       @click="selectedBuildingFor3D = building.id"
-       class="px-3 py-1.5 rounded-lg text-sm transition-all"
-       :class="selectedBuildingFor3D === building.id ? 'bg-cn-red text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
-     >
-      {{ building.name }}
-    </button>
-  </div>
+   <!-- 模型选择卡片 -->
+   <div class="mb-6">
+     <div class="flex gap-4 overflow-x-auto pb-4 px-2 scrollbar-hide justify-start md:justify-center">
+       <div 
+         v-for="building in allBuildings.filter(b => b.model)" 
+         :key="building.id"
+         @click="!modelSwitching && (selectedBuildingFor3D = building.id)"
+         class="flex-shrink-0 w-36 md:w-48 bg-white/50 backdrop-blur-sm rounded-xl p-3 border border-gray-100 hover:shadow-2xl transition-all cursor-pointer group hover:-translate-y-1 relative"
+         :class="[
+           selectedBuildingFor3D === building.id ? 'border-cn-red shadow-lg shadow-cn-red/10' : '',
+           modelSwitching && selectedBuildingFor3D === building.id ? 'opacity-70 pointer-events-none' : '',
+           modelSwitching && selectedBuildingFor3D !== building.id ? 'opacity-50 pointer-events-none' : ''
+         ]"
+       >
+         <div class="w-full h-24 rounded-lg overflow-hidden mb-3 relative">
+           <img :src="building.images[0]" :alt="building.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" @error="handleImageError($event)">
+           <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+           <div v-if="selectedBuildingFor3D === building.id" class="absolute inset-0 border-2 border-cn-red rounded-lg transition-all duration-300 flex items-center justify-center bg-cn-red/10">
+             <span class="text-white text-xs font-bold px-2 py-1 rounded-full bg-cn-red/70 backdrop-blur-sm">当前选中</span>
+           </div>
+         </div>
+         <h3 class="text-sm font-bold text-cn-black mb-1 group-hover:text-cn-red transition-colors">{{ building.name }}</h3>
+         <p class="text-xs text-gray-600">{{ building.dynasty }}</p>
+       </div>
+     </div>
+   </div>
   
   <!-- 操作工具栏 -->
   <div class="flex flex-wrap gap-3 mb-4 justify-center">
@@ -399,6 +413,7 @@ let model = null
 const modelLoading = ref(false)
 const modelError = ref(false)
 const autoRotate = ref(true)
+const modelSwitching = ref(false)
 let currentLoadId = 0 // 解决模型加载竞态问题
 const showHotspotInfo = ref(false)
 const currentHotspot = ref({ title: '', content: '' })
@@ -679,24 +694,45 @@ function loadModel(buildingId = selectedBuildingFor3D.value || 'yingxian-wooden-
   // 创建新的取消控制器
   abortController = new AbortController()
   
+  // 加载超时处理
+  const timeoutId = setTimeout(() => {
+    if (abortController && !abortController.signal.aborted) {
+      abortController.abort('加载超时')
+      if (loadId === currentLoadId) {
+        modelLoading.value = false
+        modelError.value = true
+        modelSwitching.value = false
+        abortController = null
+      }
+    }
+  }, 30000) // 30秒超时
+  
   modelLoading.value = true
   modelError.value = false
+  modelSwitching.value = true
   currentLoadId++ // 每次加载递增ID，解决竞态问题
   const loadId = currentLoadId
   
-  // 清理旧模型
-  if (model) {
-    scene.remove(model)
-    model.traverse((child) => {
-      if (child.geometry) child.geometry.dispose()
-      if (child.material) {
-        Array.isArray(child.material) 
-          ? child.material.forEach(m => m.dispose())
-          : child.material.dispose()
-      }
-    })
-    model = null
-  }
+   // 清理旧模型，添加淡出动画
+   if (model) {
+     // 淡出动画
+     gsap.to(model.material || model.children[0]?.material, {
+       opacity: 0,
+       duration: 0.2,
+       onComplete: () => {
+         scene.remove(model)
+         model.traverse((child) => {
+           if (child.geometry) child.geometry.dispose()
+           if (child.material) {
+             Array.isArray(child.material) 
+               ? child.material.forEach(m => m.dispose())
+               : child.material.dispose()
+           }
+         })
+         model = null
+       }
+     })
+   }
   
   const building = allBuildings.value.find(b => b.id === buildingId)
   const modelFile = building?.model || 'yingzhoumuta.glb'
@@ -705,6 +741,7 @@ function loadModel(buildingId = selectedBuildingFor3D.value || 'yingxian-wooden-
   loader.load(
     `${import.meta.env.BASE_URL}models/${modelFile}`,
     (gltf) => {
+      clearTimeout(timeoutId)
       // 已取消或不是最新请求直接忽略
       if (loadId !== currentLoadId || abortController?.signal.aborted) return
       
@@ -722,8 +759,37 @@ function loadModel(buildingId = selectedBuildingFor3D.value || 'yingxian-wooden-
       model.position.y = -center.y * scale
       model.position.z = -center.z * scale
       
+      // 设置模型初始状态用于动画
+      model.traverse((child) => {
+        if (child.material) {
+          child.material.transparent = true
+          child.material.opacity = 0
+        }
+      })
+      const originalScale = model.scale.clone()
+      model.scale.setScalar(originalScale.x * 0.8)
+      
       scene.add(model)
+      
+      // 模型淡入+缩放动画
+      gsap.to(model.scale, {
+        x: originalScale.x,
+        y: originalScale.y,
+        z: originalScale.z,
+        duration: 0.4,
+        ease: 'back.out(1.5)'
+      })
+      model.traverse((child) => {
+        if (child.material) {
+          gsap.to(child.material, {
+            opacity: 1,
+            duration: 0.4
+          })
+        }
+      })
+      
       modelLoading.value = false
+      modelSwitching.value = false
       abortController = null
       
       // 添加热区（示例）
@@ -734,13 +800,18 @@ function loadModel(buildingId = selectedBuildingFor3D.value || 'yingxian-wooden-
       console.log(`模型加载进度: ${(xhr.loaded / xhr.total * 100).toFixed(2)}%`)
     },
     (error) => {
+      clearTimeout(timeoutId)
       // 取消导致的错误不需要处理
       if (error.name === 'AbortError' || loadId !== currentLoadId || abortController?.signal.aborted) {
+        if (loadId === currentLoadId) {
+          modelSwitching.value = false
+        }
         return
       }
       console.error('模型加载失败:', error)
       modelLoading.value = false
       modelError.value = true
+      modelSwitching.value = false
       abortController = null
     },
     abortController.signal // 传递取消信号
@@ -1016,6 +1087,15 @@ onUnmounted(() => {
 }
 .btn-ancient:hover::before {
   left: 100%;
+}
+
+/* 隐藏滚动条 */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* 响应式适配 */
